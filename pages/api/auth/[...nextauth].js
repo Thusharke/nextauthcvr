@@ -17,17 +17,7 @@ export default async function auth(req, res) {
     adapter: MongoDBAdapter(clientPromise),
     callbacks: {
       session: async ({ session, token }) => {
-        const { data } = await axios.get(
-          `https://nextauthcvr.vercel.app/api/users`,
-          {
-            params: {
-              userId: token.sub,
-            },
-          }
-        )
-        const { details } = data
         session.userId = token.sub
-        session.userDetails = details
         return session
       },
     },
